@@ -66,6 +66,14 @@
 
 ;; Add history stuff here!!!
 ;;
+;;   17-May-2025, Pierre Rouleau
+;;     Fixed byte compiling errors and warnings.
+;;     Removed and fixed duplicate that were declared.
+;;     Much more remains to be done on this file to make it working
+;;     properly on Emacs 30.  The code is old with XEmacs and Emacs
+;;     logic.  That needs to be update, the font locking doe not work,
+;;     imenu does not work, and several other things probably do not work
+;;     either.
 ;;   15-July-2009, Roger F. Osmond
 ;;     Created new group eiffel-attachment-keywords to include new attachment
 ;;     keywords (attached and detachable).  Assigned builtin face to help
@@ -88,16 +96,16 @@ changing.  This means that if you are reporting a bug for a version
 that was shipped with Emacs, you should report the Emacs version!")
 
 (defgroup eiffel nil
-  "Eiffel mode for Emacs"
+  "Eiffel mode."
   :group 'oop)
 
 (defgroup eiffel-indent nil
-  "Indentation variables in Eiffel mode"
+  "Indentation variables in Eiffel mode."
   :prefix "eiffel-"
   :group 'eiffel)
 
 (defgroup eiffel-compile nil
-  "Compilation support variables in Eiffel mode"
+  "Compilation support variables in Eiffel mode."
   :prefix "eiffel-"
   :group 'eiffel)
 
@@ -112,172 +120,172 @@ that was shipped with Emacs, you should report the Emacs version!")
 ;; Language''.
 
 (defcustom eiffel-indent-increment 3
-  "*Default indentation interval (in spaces)."
+  "Default indentation interval (in spaces)."
   :type 'integer
   :group 'eiffel-indent)
 
 (defcustom eiffel-class-level-kw-indent 0
-  "*Indentation for Class level keywords.
+  "Indentation for Class level keywords.
 Specified as number of `eiffel-indent-increments'.  See the variable
 `eiffel-class-level-keywords-regexp'."
   :type 'integer
   :group 'eiffel-indent)
 
 (defcustom eiffel-extra-class-level-kw-indent 0
-  "*Number of extra spaces to add to `eiffel-class-level-kw-indent'.
+  "Number of extra spaces to add to `eiffel-class-level-kw-indent'.
 This results in the actual indentation of a class level keyword.  Can
 be negative."
   :type 'integer
   :group 'eiffel-indent)
 
 (defcustom eiffel-class-level-comment-indent 0
-  "*Indentation of comments at the beginning of a class.
+  "Indentation of comments at the beginning of a class.
 Specified as number of `eiffel-indent-increments'."
   :type 'integer
   :group 'eiffel-indent)
 
 (defcustom eiffel-extra-class-level-comment-indent 0
-  "*Number of spaces to add to `eiffel-class-level-comment-indent'.
+  "Number of spaces to add to `eiffel-class-level-comment-indent'.
 This results in the actual indentation of a class level comment.  Can
 be negative."
   :type 'integer
   :group 'eiffel-indent)
 
 (defcustom eiffel-inherit-level-kw-indent 2
-  "*Indentation of keywords falling under the Inherit clause.
+  "Indentation of keywords falling under the Inherit clause.
 Specified as number of `eiffel-indent-increments'.  See the variable
 `eiffel-inherit-level-keywords'."
   :type 'integer
   :group 'eiffel-indent)
 
 (defcustom eiffel-extra-inherit-level-kw-indent 0
-  "*Number of spaces to add to `eiffel-inherit-level-kw-indent'.
+  "Number of spaces to add to `eiffel-inherit-level-kw-indent'.
 This results in the actual indentation of an inherit level keyword.
 Can be negative."
   :type 'integer
   :group 'eiffel-indent)
 
 (defcustom eiffel-feature-level-indent 1
-  "*Indentation amount of features.
+  "Indentation amount of features.
 Specified as number of `eiffel-indent-increments'."
   :type 'integer
   :group 'eiffel-indent)
 
 (defcustom eiffel-extra-feature-level-indent 0
-  "*Number of spaces to add to `eiffel-feature-level-indent'.
+  "Number of spaces to add to `eiffel-feature-level-indent'.
 This results in the indentation of a feature.  Can be negative."
   :type 'integer
   :group 'eiffel-indent)
 
 (defcustom eiffel-feature-level-kw-indent 2
-  "*Indentation of keywords belonging to individual features.
+  "Indentation of keywords belonging to individual features.
 Specified as number of `eiffel-indent-increments'.  See the variable
 `eiffel-feature-level-keywords-regexp'."
   :type 'integer
   :group 'eiffel-indent)
 
 (defcustom eiffel-extra-feature-level-kw-indent 0
-  "*Number of spaces to add to `eiffel-feature-level-kw-indent'.
+  "Number of spaces to add to `eiffel-feature-level-kw-indent'.
 This results in the actual indentation of a feature level keyword.
 Can be negative."
   :type 'integer
   :group 'eiffel-indent)
 
 (defcustom eiffel-feature-level-comment-indent 3
-  "*Indentation of comments at the beginning of a feature.
+  "Indentation of comments at the beginning of a feature.
 Specified as number of `eiffel-indent-increments'."
   :type 'integer
   :group 'eiffel-indent)
 
 (defcustom eiffel-extra-feature-level-comment-indent 0
-  "*Number of spaces to add to `eiffel-feature-level-comment-indent'.
+  "Number of spaces to add to `eiffel-feature-level-comment-indent'.
 This results in the actual indentation of a feature level comment.
 Can be negative."
   :type 'integer
   :group 'eiffel-indent)
 
 (defcustom eiffel-body-comment-indent 0
-  "*Indentation of comments in the body of a routine.
+  "Indentation of comments in the body of a routine.
 Specified as number of `eiffel-indent-increments')"
   :type 'integer
   :group 'eiffel-indent)
 
 (defcustom eiffel-extra-body-comment-indent 0
-  "*Number of spaces to add to `eiffel-body-comment-indent'.
+  "Number of spaces to add to `eiffel-body-comment-indent'.
 This results in the actual indentation of a routine body comment.  Can
 be negative."
   :type 'integer
   :group 'eiffel-indent)
 
 (defcustom eiffel-check-keyword-indent 0
-  "*Extra indentation for the check clause as described in ETL.
+  "Extra indentation for the check clause as described in ETL.
 Specified as number of `eiffel-indent-increments'.  Default is 0, which
 is different than in ETL's 1."
   :type 'integer
   :group 'eiffel-indent)
 
 (defcustom eiffel-extra-check-keyword-indent 0
-  "*Number of spaces to add to `eiffel-check-keyword-indent'.
+  "Number of spaces to add to `eiffel-check-keyword-indent'.
 This results in the actual indentation of a check keyword.  Can be
 negative."
   :type 'integer
   :group 'eiffel-indent)
 
 (defcustom eiffel-rescue-keyword-indent -1
-  "*Extra indentation for the rescue clause as described in ETL.
+  "Extra indentation for the rescue clause as described in ETL.
 Specified as number of `eiffel-indent-increments'.  Default is -1."
   :type 'integer
   :group 'eiffel-indent)
 
 (defcustom eiffel-extra-rescue-keyword-indent 0
-  "*Number of spaces to add to `eiffel-rescue-keyword-indent'.
+  "Number of spaces to add to `eiffel-rescue-keyword-indent'.
 This results in the actual indentation of a rescue keyword.  Can be
 negative."
   :type 'integer
   :group 'eiffel-indent)
 
 (defcustom eiffel-then-indent 0
-  "*Indentation for a `then' appearing on a line by itself.
+  "Indentation for a `then' appearing on a line by itself.
 This is as opposed to a `then' on the same line as an `if'.  Specified
 as number of `eiffel-indent-increments'."
   :type 'integer
   :group 'eiffel-indent)
 
 (defcustom eiffel-extra-then-indent 1
-  "*Number of spaces to add to `eiffel-then-indent'.
+  "Number of spaces to add to `eiffel-then-indent'.
 This results in the actual indentation of a `then' appearing on a line
 by itself.  Can be negative."
   :type 'integer
   :group 'eiffel-indent)
 
 (defcustom eiffel-continuation-indent 1
-  "*Extra indentation for a continued statement line.
+  "Extra indentation for a continued statement line.
 Specified as number of `eiffel-indent-increments'."
   :type 'integer
   :group 'eiffel-indent)
 
 (defcustom eiffel-extra-continuation-indent 0
-  "*Number of spaces to add to `eiffel-continuation-indent'.
+  "Number of spaces to add to `eiffel-continuation-indent'.
 This results in the actual indentation of a continued statement
 line.  Can be negative."
   :type 'integer
   :group 'eiffel-indent)
 
 (defcustom eiffel-string-continuation-indent 0
-  "*Extra indentation for a continued string.
+  "Extra indentation for a continued string.
 Specified as number of `eiffel-indent-increments'."
   :type 'integer
   :group 'eiffel-indent)
 
 (defcustom eiffel-extra-string-continuation-indent -1
-  "*Number of spaces to add to `eiffel-string-continuation-indent'.
+  "Number of spaces to add to `eiffel-string-continuation-indent'.
 This results in the actual indentation of a continued string.  Can be
 negative."
   :type 'integer
   :group 'eiffel-indent)
 
 (defcustom eiffel-indent-string-continuations-relatively-flag t
-  "*Non-nil means string continuations are indented relative to 1st character.
+  "Non-nil means string continuations are indented relative to 1st character.
 That is, `eiffel-string-continuation-indent' and
 `eiffel-extra-string-continuation-indent' are added to position of first
 character of string.  If nil, string continuations are indented
@@ -286,23 +294,23 @@ relative to indent of previous line."
   :group 'eiffel-indent)
 
 (defcustom eiffel-multi-line-string-indent t
-  "*Set to nil if multi line strings need indentation or need to be left alone when indenting."
+  "Non-nil means multi line strings must be indented."
   :type 'boolean
   :group 'eiffel-indent)
 
 (defcustom eiffel-set-tab-width-flag t
-  "*Non-nil means `tab-width' is set to `eiffel-indent-increment' in `eiffel-mode'."
+  "Non-nil means `tab-width' set to `eiffel-indent-increment' in Eiffel Mode."
   :type 'boolean
   :group 'eiffel-indent)
 
 (defcustom eiffel-preprocessor-indent 0
-  "*Indentation for lines GOBO preprocessor directives.
+  "Indentation for lines GOBO preprocessor directives.
 Specified as number of `eiffel-indent-increments' from left margin."
   :type 'integer
   :group 'eiffel-indent)
 
 (defcustom eiffel-fill-max-save 4096
-  "*Maximum size of a paragraph to save before filling.
+  "Maximum size of a paragraph to save before filling.
 Normally \\[eiffel-fill-paragraph] will mark a buffer as modified even if
 the fill operation does not make any changes.  If the paragraph being
 filled is smaller than the value of this variable then the contents of
@@ -314,7 +322,7 @@ big number to enable it for all paragraphs."
   :group 'eiffel-indent)
 
 (defcustom eiffel-use-gnu-eiffel t
-  "*If t include support for compilation using GNU SmartEiffel."
+  "If t include support for compilation using GNU SmartEiffel."
   :type 'boolean
   :group 'eiffel-compile)
 
@@ -322,19 +330,19 @@ big number to enable it for all paragraphs."
   (if (file-executable-p "/usr/bin/se-compile")
     "se-compile"
   "compile")
-  "*Program to use for compiling Eiffel programs.
+  "Program to use for compiling Eiffel programs.
 The default is \"compile\", unless \"/usr/bin/se-compile\" exists, as
 in Debian GNU/Linux, when the default value is \"se-compile\"."
   :type 'string
   :group 'eiffel-compile)
 
 (defcustom eiffel-short-command "short"
-  "*Program to use for producing short form of Eiffel classes."
+  "Program to use for producing short form of Eiffel classes."
   :type 'string
   :group 'eiffel-compile)
 
 (defcustom eiffel-compile-options ""
-  "*Options to use for compiling Eiffel programs."
+  "Options to use for compiling Eiffel programs."
   :type 'string
   :group 'eiffel-compile)
 
@@ -392,22 +400,22 @@ in Debian GNU/Linux, when the default value is \"se-compile\"."
     eiffel-extra-rescue-keyword-indent))
 
 (defmacro eiffel-then-indent-m ()
-  "Indentation amount for `then' appearing on a line by itself (in number of spaces)."
+  "Indentation for `then' appearing on a line by itself (in number of spaces)."
   '(+ (* eiffel-then-indent eiffel-indent-increment)
     eiffel-extra-then-indent))
 
 (defmacro eiffel-continuation-indent-m ()
-  "Indentation amount for a statement continuation line (in number of spaces)."
+  "Indentation for a statement continuation line (in number of spaces)."
   '(+ (* eiffel-continuation-indent eiffel-indent-increment)
     eiffel-extra-continuation-indent))
 
 (defmacro eiffel-string-continuation-indent-m ()
-  "Indentation amount for a statement continuation line (in number of spaces)."
+  "Indentation for a statement continuation line (in number of spaces)."
   '(+ (* eiffel-string-continuation-indent eiffel-indent-increment)
     eiffel-extra-string-continuation-indent))
 
 (defmacro eiffel-preprocessor-indent-m ()
-  "Indentation amount for a preprocessor statement (in number of spaces)."
+  "Indentation for a preprocessor statement (in number of spaces)."
   '(* eiffel-preprocessor-indent eiffel-indent-increment))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -585,25 +593,15 @@ part of this list but it is handled separately in the function
 If one of these occurs prior to an `eiffel-obsolete-keyword' then the
 `eiffel-obsolete-keyword' is indented.")
 
-(defconst eiffel-create-keyword
-  "create"
+(defconst eiffel-create-keyword "create"
   "Eiffel `create' keyword.  Can be used at class or minor level.")
 
 (defconst eiffel-create-keyword-regexp
   (eiffel-post-word-anchor eiffel-create-keyword)
   "Regexp matching `create' keyword, with trailing context.")
 
-(defconst eiffel-indexing-obs-keyword
-  "indexing"
-  "Eiffel `indexing' keyword, replaced by 'note'.")
-
-(defconst eiffel-indexing-keyword
-  "note"
-  "Eiffel `note' keyword.  Can be used at class or minor level.")
-
 (defconst eiffel-indexing-keyword-regexp
   (eiffel-post-word-anchor "note\\|indexing")
-;;  (eiffel-post-word-anchor eiffel-indexing-keyword)
   "Regexp matching `indexing' or `note' keywords, with trailing context.")
 
 (defconst eiffel-indentation-keywords
@@ -1068,17 +1066,15 @@ Returns the same thing as \\[compile-internal] - the compilation buffer."
   "Display the short form of an Eiffel class."
   (interactive)
   (let* ((class (read-string
-     "Class or file: "
-     (if (buffer-file-name)
-       (file-name-nondirectory (buffer-file-name)))))
-   (buf (get-buffer-create (concat "*Eiffel - short " class "*"))))
-
-  (shell-command (concat eiffel-short-command " " class) buf)
-  (save-excursion
-    (set-buffer buf)
-    (let ((font-lock-defaults eiffel-font-lock-defaults))
-  (font-lock-fontify-buffer))
-    (toggle-read-only 1))))
+                 "Class or file: "
+                 (if (buffer-file-name)
+                     (file-name-nondirectory (buffer-file-name)))))
+         (buf (get-buffer-create (concat "*Eiffel - short " class "*"))))
+    (shell-command (concat eiffel-short-command " " class) buf)
+    (with-current-buffer buf
+      (let ((font-lock-defaults eiffel-font-lock-defaults))
+        (font-lock-ensure))
+      (read-only-mode 1))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -1140,25 +1136,25 @@ The match is actually an unbounded match starting at the previous character."
 
 (defun eiffel-re-search-forward (regexp &optional limit noerror)
   "Search forward from point for REGEXP not in comment or string.
-`case-fold-search' is set to nil when searching.  For details on other
-arguments see \\[re-search-forward]."
+The `case-fold-search' is set to nil when searching.  For details on other
+arguments (LIMIT and NOERROR) see \\[re-search-forward]."
 
   (interactive "sRE search: ")
   (let ((start (point))
-  found case-fold-search)
-  (while (and (setq found (re-search-forward regexp limit noerror))
-    (eiffel-in-comment-or-quoted-string-p)))
-  (if (and found
-    (eiffel-not-in-comment-or-quoted-string-p))
-  found
-    (if (eq noerror t)
-    (goto-char start))
-    nil)))
+        found case-fold-search)
+    (while (and (setq found (re-search-forward regexp limit noerror))
+                (eiffel-in-comment-or-quoted-string-p)))
+    (if (and found
+             (eiffel-not-in-comment-or-quoted-string-p))
+        found
+      (if (eq noerror t)
+          (goto-char start))
+      nil)))
 
 (defun eiffel-re-search-backward (regexp &optional limit noerror)
   "Search backward from point for REGEXP not in comment or string.
-`case-fold-search' is set to nil when searching.  For details on other
-arguments see \\[re-search-forward]."
+The `case-fold-search' is set to nil when searching.  For details on other
+arguments (LIMIT and NOERROR) see \\[re-search-forward]."
   (interactive "sRE search: ")
   (let ((start (point))
   found case-fold-search)
@@ -1333,11 +1329,12 @@ don't start with a relevant keyword, the calculation is handed off to
   indent))
 
 (defun eiffel-calc-indent-non-keyword ()
-  "Calculate indentation of current Eiffel code line, without leading
-keyword.  This function generally assumes that the preceding line of
-code is indented properly, and usually bases the indentation of the
-current line on that preceding line. This function assumes
-`back-to-indentation' is in effect."
+  "Compute indentation of current Eiffel code line.
+
+The line has no leading keyword.
+This function assumes that the preceding line of code is indented properly,
+and usually bases the indentation of the current line on that preceding line.
+It also assumes `back-to-indentation' is in effect."
   (let (previous-line-indent what-indentation)
     (save-excursion
 
@@ -1351,15 +1348,15 @@ current line on that preceding line. This function assumes
           (if eiffel-multi-line-string-indent
               (if (looking-at "[]]\"")
                   0
-                (let (beginning-of-line-position)
-                  (save-excursion
-                    (end-of-line 0)
-                    (backward-char 2)
-                    (if (looking-at "\"[[]")
-                        0
-                      (back-to-indentation)
-                      (current-column)))))
-            (back-to-indentation) (current-column))
+                (save-excursion
+                  (end-of-line 0)
+                  (backward-char 2)
+                  (if (looking-at "\"[[]")
+                      0
+                    (back-to-indentation)
+                    (current-column))))
+            (back-to-indentation)
+            (current-column))
         ;; TODO:
         ;; 2. indentation with arrays?
         (setq previous-line-indent (eiffel-previous-line-indent))
@@ -1404,10 +1401,14 @@ current line on that preceding line. This function assumes
            (what-indentation))))))))
 
 (defun eiffel-what-indentation ()
-  "Determine what indentation is required. There are basically three
-options: increase the indentation, decrease it, or keep it the same as
-the previous line. Besides that there are a few minor cases. This
-function assumes `back-to-indentation' is in effect."
+  "Determine what indentation is required.
+There are basically three options:
+- increase the indentation,
+- decrease it, or
+- keep it the same as the previous line.
+
+Besides that there are a few minor cases.
+It assumes `back-to-indentation' is in effect."
   (let (looking-at-comment)
     (save-excursion
 
@@ -1439,7 +1440,7 @@ function assumes `back-to-indentation' is in effect."
        ;; we always indent the next line if the previous line ends
        ;; with "implies"
        ((looking-at "implies\\([ \t]\\|$\\)")
-          'eiffel-what-indent-increase)
+        'eiffel-what-indent-increase)
        ;; determine if we're on a continuation; like a string
        ;; continuation we have to distinguish between the first
        ;; continuation and subsequent continuations.
@@ -1462,7 +1463,7 @@ function assumes `back-to-indentation' is in effect."
        (t `eiffel-what-indent-as-previous)))))
 
 (defun eiffel-is-preceded-by (word)
-  "Is the previous word equal to word?"
+  "Is WORD equal to the previous one?"
   (save-excursion
     (backward-sexp)
     (looking-at (concat word "\\([ \t]\\|$\\)"))))
@@ -1474,12 +1475,12 @@ function assumes `back-to-indentation' is in effect."
     (looking-at "[a-zA-Z0-9_]+:")))
 
 (defun eiffel-is-first-line-after-boolean-keyword ()
-  "Are we on the first line following the keywords require, ensure,
-until or if?"
+  "Is point  on the first line following keywords require, ensure, until or if?"
   (save-excursion
     (beginning-of-line)
     (condition-case nil
-        (let () (backward-sexp) (looking-at "\\(require\\|if\\|elseif\\|until\\|ensure\\)\\([ \t]\\|$\\)"))
+        (let () (backward-sexp)
+             (looking-at "\\(require\\|if\\|elseif\\|until\\|ensure\\)\\([ \t]\\|$\\)"))
       (error t))))
 
 (defun eiffel-previous-line-is-string-continuation-line ()
@@ -1489,7 +1490,8 @@ until or if?"
     (looking-at "%")))
 
 (defun eiffel-line-ends-with-continuation-symbol ()
-  "Does the line end with an operator or colon? Assumes that with a `backward-sexp' we have come unto this line."
+  "Does the line end with an operator or colon?
+Assumes that with a `backward-sexp' we have come unto this line."
   (save-excursion
     (cond
      ((looking-at "\\(and\\|or\\|implies\\)\\([ \t]\\|$\\)") t)
@@ -1500,7 +1502,8 @@ until or if?"
       (looking-at "[ \t]*\\([@*/+:=]\\|-[^-]\\)")))))
 
 (defun eiffel-current-line-is-continuation ()
-  "Is current line a continuation, based upon if it starts with an operator?"
+  "Is current line a continuation?
+Based upon if it starts with an operator?"
   (save-excursion
     (back-to-indentation)
     (looking-at eiffel-operator-regexp)))
@@ -1509,15 +1512,11 @@ until or if?"
   "Does the previous line indicate that the next line is a continuation?"
   (save-excursion
     (condition-case nil
-        (eiffel-previous-line-is-continuation)
+        (progn
+          (beginning-of-line)
+          (backward-sexp)
+          (eiffel-line-ends-with-continuation-symbol))
       (error nil))))
-
-(defun eiffel-previous-line-is-continuation ()
-  "Does the previous line indicate that the next line is a continuation?"
-  (save-excursion
-    (beginning-of-line)
-    (backward-sexp)
-    (eiffel-line-ends-with-continuation-symbol)))
 
 (defun eiffel-previous-previous-line-is-continuation ()
   "Is the line before the previous line a continuation?"
@@ -1544,27 +1543,24 @@ until or if?"
         (back-to-indentation)
         (current-column)))))
 
-(defun eiffel-previous-line-indent ()
-  "Amount of identation of previous line."
-  (save-excursion
-    (condition-case nil
-        (eiffel-previous-line-indent)
-      (error (eiffel-previous-line-indent2)))))
-
-(defun eiffel-previous-line-indent ()
-  "Indentation of previous sexp"
-  (backward-sexp)
-  (back-to-indentation)
-  (current-column))
-
 (defun eiffel-previous-line-indent2 ()
-  "Indentation of previous word, but negative"
+  "Indentation of previous word, but negative."
   (backward-word 1)
   (back-to-indentation)
   (- 0 (current-column)))
 
+(defun eiffel-previous-line-indent ()
+  "Amount of identation of previous line."
+  (save-excursion
+    (condition-case nil
+        (progn
+          (backward-sexp)
+          (back-to-indentation)
+          (current-column))
+      (error (eiffel-previous-line-indent2)))))
+
 (defun eiffel-indent-of-last-non-continuation-line ()
-  "Amount of identation of last line that isn't a continuation"
+  "Amount of identation of last line that isn't a continuation."
   (save-excursion
     (while (or
             (eiffel-current-line-is-continuation)
@@ -1643,7 +1639,7 @@ of `eiffel-check-keyword-indent'."
     keyword)))
 
 (defun eiffel-line-contains-close-paren ()
-  "Return t if the current line contains a close paren, nil otherwise.
+  "Return t when current line has a close paren, nil otherwise.
 If a close paren is found, the point is placed immediately after the
 last close paren on the line.  If no paren is found, the point is
 placed at the beginning of the line."
@@ -1697,6 +1693,7 @@ placed at the beginning of the line."
 
 (defun eiffel-matching-line (&optional return-line-break direction)
   "Return the position of the keyword matching the one on the current line.
+
 For example, a line containing the keyword `do' is matched by a line
 containing the keyword `end' and a line containing `end' may be
 matched by a number of opening keywords.  If the optional parameter
@@ -1704,129 +1701,129 @@ RETURN-LINE-BREAK is non-nil, the character position returned is the
 beginning (or end) of the line containing the matching keyword instead
 of the position of the keyword itself.  If the second optional
 parameter, DIRECTION, is non-nil, the current line is not searched for
-a keyword.  Instead, if the value of direction is 'forward, the
+a keyword.  Instead, if the value of direction is \\='forward, the
 function acts as if an `eiffel-opening-regexp' is on the current line.
-If the value of direction is 'backward, the function acts as if a
+If the value of direction is \\='backward, the function acts as if a
 `eiffel-closing-regexp' is on the current line.  The effect of using the
 direction parameter is to locate either the opening or closing keyword
 of the syntactic construct containing the point."
   (let ((nesting-level 0)
-  (search-end 0)
-  matching-point opening-keyword match-start match-end
-  success start-point)
-  (unwind-protect
-  (save-excursion
-    (modify-syntax-entry ?_  "w  ")
-    (setq eiffel-matching-kw-for-end "");; public variable set by this function
-    (setq start-point (point))
-    (end-of-line)
-    (setq search-end (point))
-    (beginning-of-line)
-    ;; Set starting state: If direction was specified use it.
-    ;; If direction is nil, search for a keyword on the current line
-    ;; If the keyword is in eiffel-opening-regexp, set the search
-    ;; direction to 'forward, if the keyword on the current line is `end'
-    ;; set the search direction to 'backward.
-    (cond ((eq direction 'forward)
-     (end-of-line)       ;; So we wont see keywords on this line.
-     (setq nesting-level 1))
-    ((eq direction 'backward)
-     (beginning-of-line) ;; So we wont see keywords on this line.
-     (setq nesting-level -1))
-    ((and (re-search-forward eiffel-opening-regexp search-end t)
-        (eiffel-not-in-comment-or-quoted-string-p))
-     (setq match-start (match-beginning 0))
-     (setq match-end (match-end 0))
-     (goto-char match-start)
-     (if (and (not (looking-at eiffel-non-opening-regexp))
-        (eiffel-not-in-comment-or-quoted-string-p))
-       (setq nesting-level 1))
-     (setq opening-keyword
-         (cons (buffer-substring match-start match-end)
-         opening-keyword))
-     (goto-char match-end))
-    ((and (progn (beginning-of-line) t)
-        (re-search-forward eiffel-closing-regexp search-end t)
-        (eiffel-not-in-comment-or-quoted-string-p))
-     (goto-char (match-beginning 0))
-     (if (eiffel-not-in-comment-or-quoted-string-p)
-       (setq nesting-level -1))))
-    ;; Perform the search
-    (while (not (= nesting-level 0))
-    (if (> nesting-level 0)
-    ;; Then search forward for the next keyword not in a comment
-    (while (and (re-search-forward eiffel-opening-or-closing-regexp nil 1)
-        (goto-char (setq match-start (match-beginning 0)))
-        (setq match-end   (match-end 0))
-        (setq success t)
-        (or (looking-at eiffel-non-opening-regexp)
-        (eiffel-in-comment-or-quoted-string-p)))
-      (goto-char match-end)
-      (setq success nil))
-      ;; Else search backward for the next keyword not in a comment
-      (while (and (re-search-backward eiffel-opening-or-closing-regexp nil 1)
-        (goto-char (setq match-start (match-beginning 0)))
-        (setq success t)
-        (or (looking-at eiffel-non-opening-regexp)
-          (eiffel-in-comment-or-quoted-string-p)))
-    (setq success nil)))
-    (cond ((and (not (looking-at eiffel-non-opening-regexp))
-      (looking-at eiffel-opening-regexp)
-      success)
-       ;; Found an opening keyword
-       (if (> nesting-level 0)
-         ;; Then
-         (if (looking-at eiffel-do-regexp)
-         ;; Then
-         (setq nesting-level -1)
-       ;; Else
-       (setq opening-keyword
-           (cons (buffer-substring match-start
-                 (match-end 0))
-           opening-keyword))
-       (goto-char (match-end 0)))
-       ;; Else
-       (if (= nesting-level -1)
-       ;; Then
-       (progn
-         (setq eiffel-matching-kw-for-end
-         (buffer-substring match-start (match-end 0)))
-         (if (looking-at "[ \t\n]+")
-           (goto-char (match-end 0))))
-         ;; Else
-         (if (looking-at eiffel-do-regexp)
-         ;; Then
-         (progn
-         (goto-char (eiffel-matching-line nil 'forward))
-         (setq nesting-level -1))))
-       (setq opening-keyword (cdr opening-keyword))
-       (if return-line-break
-       (beginning-of-line)))
-       (setq nesting-level (1+ nesting-level)))
-      ((and (looking-at eiffel-closing-regexp) success)
-       ;; Found an opening keyword
-       (if (> nesting-level 0)
-         ;; Then
-         (progn
-       (setq opening-keyword (cdr opening-keyword))
-       (if return-line-break
-         (end-of-line))
-       (goto-char (match-end 0)))
-       ;; Else
-       (setq opening-keyword
-         (cons (buffer-substring (match-beginning 0)
-               (match-end 0))
-         opening-keyword)))
-       (setq nesting-level (1- nesting-level)))
-      (t (message (concat "Could not find match"
-            (if (car opening-keyword)
-            (concat " for: "
-              (car opening-keyword)))))
-       (goto-char start-point)
-       (setq nesting-level 0))))
-    (setq matching-point (point)))
-    (modify-syntax-entry ?_  "_  "))
-  (set-mark matching-point)))
+        (search-end 0)
+        matching-point opening-keyword match-start match-end
+        success start-point)
+    (unwind-protect
+        (save-excursion
+          (modify-syntax-entry ?_  "w  ")
+          (setq eiffel-matching-kw-for-end "") ;; public variable set by this function
+          (setq start-point (point))
+          (end-of-line)
+          (setq search-end (point))
+          (beginning-of-line)
+          ;; Set starting state: If direction was specified use it.
+          ;; If direction is nil, search for a keyword on the current line
+          ;; If the keyword is in eiffel-opening-regexp, set the search
+          ;; direction to 'forward, if the keyword on the current line is `end'
+          ;; set the search direction to 'backward.
+          (cond ((eq direction 'forward)
+                 (end-of-line) ;; So we wont see keywords on this line.
+                 (setq nesting-level 1))
+                ((eq direction 'backward)
+                 (beginning-of-line) ;; So we wont see keywords on this line.
+                 (setq nesting-level -1))
+                ((and (re-search-forward eiffel-opening-regexp search-end t)
+                      (eiffel-not-in-comment-or-quoted-string-p))
+                 (setq match-start (match-beginning 0))
+                 (setq match-end (match-end 0))
+                 (goto-char match-start)
+                 (if (and (not (looking-at eiffel-non-opening-regexp))
+                          (eiffel-not-in-comment-or-quoted-string-p))
+                     (setq nesting-level 1))
+                 (setq opening-keyword
+                       (cons (buffer-substring match-start match-end)
+                             opening-keyword))
+                 (goto-char match-end))
+                ((and (progn (beginning-of-line) t)
+                      (re-search-forward eiffel-closing-regexp search-end t)
+                      (eiffel-not-in-comment-or-quoted-string-p))
+                 (goto-char (match-beginning 0))
+                 (if (eiffel-not-in-comment-or-quoted-string-p)
+                     (setq nesting-level -1))))
+          ;; Perform the search
+          (while (not (= nesting-level 0))
+            (if (> nesting-level 0)
+                ;; Then search forward for the next keyword not in a comment
+                (while (and (re-search-forward eiffel-opening-or-closing-regexp nil 1)
+                            (goto-char (setq match-start (match-beginning 0)))
+                            (setq match-end   (match-end 0))
+                            (setq success t)
+                            (or (looking-at eiffel-non-opening-regexp)
+                                (eiffel-in-comment-or-quoted-string-p)))
+                  (goto-char match-end)
+                  (setq success nil))
+              ;; Else search backward for the next keyword not in a comment
+              (while (and (re-search-backward eiffel-opening-or-closing-regexp nil 1)
+                          (goto-char (setq match-start (match-beginning 0)))
+                          (setq success t)
+                          (or (looking-at eiffel-non-opening-regexp)
+                              (eiffel-in-comment-or-quoted-string-p)))
+                (setq success nil)))
+            (cond ((and (not (looking-at eiffel-non-opening-regexp))
+                        (looking-at eiffel-opening-regexp)
+                        success)
+                   ;; Found an opening keyword
+                   (if (> nesting-level 0)
+                       ;; Then
+                       (if (looking-at eiffel-do-regexp)
+                           ;; Then
+                           (setq nesting-level -1)
+                         ;; Else
+                         (setq opening-keyword
+                               (cons (buffer-substring match-start
+                                                       (match-end 0))
+                                     opening-keyword))
+                         (goto-char (match-end 0)))
+                     ;; Else
+                     (if (= nesting-level -1)
+                         ;; Then
+                         (progn
+                           (setq eiffel-matching-kw-for-end
+                                 (buffer-substring match-start (match-end 0)))
+                           (if (looking-at "[ \t\n]+")
+                               (goto-char (match-end 0))))
+                       ;; Else
+                       (if (looking-at eiffel-do-regexp)
+                           ;; Then
+                           (progn
+                             (goto-char (eiffel-matching-line nil 'forward))
+                             (setq nesting-level -1))))
+                     (setq opening-keyword (cdr opening-keyword))
+                     (if return-line-break
+                         (beginning-of-line)))
+                   (setq nesting-level (1+ nesting-level)))
+                  ((and (looking-at eiffel-closing-regexp) success)
+                   ;; Found an opening keyword
+                   (if (> nesting-level 0)
+                       ;; Then
+                       (progn
+                         (setq opening-keyword (cdr opening-keyword))
+                         (if return-line-break
+                             (end-of-line))
+                         (goto-char (match-end 0)))
+                     ;; Else
+                     (setq opening-keyword
+                           (cons (buffer-substring (match-beginning 0)
+                                                   (match-end 0))
+                                 opening-keyword)))
+                   (setq nesting-level (1- nesting-level)))
+                  (t (message (concat "Could not find match"
+                                      (if (car opening-keyword)
+                                          (concat " for: "
+                                                  (car opening-keyword)))))
+                     (goto-char start-point)
+                     (setq nesting-level 0))))
+          (setq matching-point (point)))
+      (modify-syntax-entry ?_  "_  "))
+    (set-mark matching-point)))
 
 ;; ENHANCEME: Make this function correctly indent more than just routine
 ;;            bodies and their sub-constructs.  At the least it should
@@ -1834,9 +1831,9 @@ of the syntactic construct containing the point."
 (defun eiffel-indent-construct ()
   "Indent an entire eiffel syntactic construct.
 It is assumed that the point is within a nesting construct ('do',
-`once', 'check', 'if', 'from', or 'inspect').  The whole construct is
+once, check, if, from, or inspect).  The whole construct is
 indented up to the matching end.  If the point is not within such a
-construct, then only that line is indented"
+construct, then only that line is indented."
   (interactive)
   (let ((start-point 0) (end-point 0))
   (save-excursion
@@ -2085,9 +2082,10 @@ does matching of parens ala \\[backward-sexp]'."
       ["Feature Quote" eiffel-feature-quote  (eiffel-in-comment-p)]
       ["Fill         " eiffel-fill-paragraph (eiffel-near-comment-p)])
     ["----------" nil nil]
-      ["Customize"           eiffel-customize     t])))
-  (easy-menu-add eiffel-mode-menu))
+    ["Customize"           eiffel-customize     t]))))
 
+;; [:todo 2025-05-17, by Pierre Rouleau: Fix the followong: use
+    ;;define-derive-mode instead of the way this is coded. ]
 ;;;###autoload
 (defun eiffel-mode ()
   "Major mode for editing Eiffel programs.
@@ -2110,18 +2108,18 @@ compilation and indentation variables that can be customized."
   (setq mode-name "Eiffel")
 
   (if eiffel-use-gnu-eiffel
-    (progn
-;;  (define-key eiffel-mode-map "\C-c\C-c" 'eiffel-compile)
-;;  (define-key eiffel-mode-map "\C-c\C-o" 'eiffel-set-compile-options)
-;;  (define-key eiffel-mode-map "\C-c\C-r" 'eiffel-run)
-;;  (define-key eiffel-mode-map "\C-c\C-d" 'eiffel-debug)
-;;  (define-key eiffel-mode-map "\C-c\C-s" 'eiffel-short)
-)
-;;  (define-key eiffel-mode-map "\C-c\C-c" nil)
-;;  (define-key eiffel-mode-map "\C-c\C-o" nil)
-;;  (define-key eiffel-mode-map "\C-c\C-r" nil)
-;;  (define-key eiffel-mode-map "\C-c\C-s" nil)
-)
+      (progn
+        ;;  (define-key eiffel-mode-map "\C-c\C-c" 'eiffel-compile)
+        ;;  (define-key eiffel-mode-map "\C-c\C-o" 'eiffel-set-compile-options)
+        ;;  (define-key eiffel-mode-map "\C-c\C-r" 'eiffel-run)
+        ;;  (define-key eiffel-mode-map "\C-c\C-d" 'eiffel-debug)
+        ;;  (define-key eiffel-mode-map "\C-c\C-s" 'eiffel-short)
+        )
+    ;;  (define-key eiffel-mode-map "\C-c\C-c" nil)
+    ;;  (define-key eiffel-mode-map "\C-c\C-o" nil)
+    ;;  (define-key eiffel-mode-map "\C-c\C-r" nil)
+    ;;  (define-key eiffel-mode-map "\C-c\C-s" nil)
+    )
 
   (use-local-map eiffel-mode-map)
   (eiffel-add-menu)
@@ -2143,21 +2141,21 @@ compilation and indentation variables that can be customized."
   (make-local-variable 'imenu-create-index-function)
   ;; Now set their values.
   (setq paragraph-start              (concat "^$\\|" page-delimiter)
-  paragraph-separate           paragraph-start
-  paragraph-ignore-fill-prefix t
-  require-final-newline        'ask
-  parse-sexp-ignore-comments   t
-  indent-line-function         'eiffel-indent-line
-  indent-region-function       'eiffel-indent-region
-  ;;
-  comment-start                "-- "
-  comment-end                  ""
-  comment-column               32
-  comment-start-skip           eiffel-comment-start-skip
-  font-lock-defaults           eiffel-font-lock-defaults)
+        paragraph-separate           paragraph-start
+        paragraph-ignore-fill-prefix t
+        require-final-newline        'ask
+        parse-sexp-ignore-comments   t
+        indent-line-function         'eiffel-indent-line
+        indent-region-function       'eiffel-indent-region
+        ;;
+        comment-start                "-- "
+        comment-end                  ""
+        comment-column               32
+        comment-start-skip           eiffel-comment-start-skip
+        font-lock-defaults           eiffel-font-lock-defaults)
 
   (if eiffel-set-tab-width-flag
-    (setq tab-width eiffel-indent-increment))
+      (setq tab-width eiffel-indent-increment))
 
   (setq auto-fill-function 'eiffel-auto-fill)
   (run-hooks 'eiffel-mode-hook))
@@ -2454,19 +2452,21 @@ Comments that are not the only thing on a line return nil as their prefix."
        (set-buffer-modified-p orig-state))
       ret))))))
 
-(defun eiffel-indent-line (&optional whole-exp)
-  "Indent the current line as Eiffel code.
-With optional argument WHOLE-EXP, indent any additional lines of the
-same clause rigidly along with this one (not implemented yet)."
+;; TODO:  add optional whole_exp argument.
+;; With optional argument WHOLE-EXP, indent any additional lines of the
+;; same clause rigidly along with this one (not implemented yet).
+;;
+(defun eiffel-indent-line ()
+  "Indent the current line as Eiffel code."
   (interactive "p")
   (save-excursion
-  (beginning-of-line)
-  (skip-chars-forward " \t")
-  (let ((indent (eiffel-calc-indent)))
-    (if (not (= indent (current-column)))
-    (progn
-    (delete-horizontal-space)
-    (indent-to indent)))))
+    (beginning-of-line)
+    (skip-chars-forward " \t")
+    (let ((indent (eiffel-calc-indent)))
+      (if (not (= indent (current-column)))
+          (progn
+            (delete-horizontal-space)
+            (indent-to indent)))))
   (skip-chars-forward " \t"))
 
 (defun eiffel-move-to-prev-non-blank ()
@@ -2476,40 +2476,43 @@ Return t if successful, nil if not."
   (re-search-backward "^[ \t]*[^ \t\n]" nil t))
 
 (defun eiffel-in-multiline-string-expression ()
-  "Determine if we are inside a multi-line string expression. Searches a maximu m of 2048 characters backward, so will not work for really large strings."
+  "Determine if we are inside a multi-line string expression.
+Searches a maximum of 2048 characters backward, so will not work for
+really large strings."
   (interactive)
   (let (multi-line-string (limit 0))
-  (if (>= (point) 2048)
-    (setq limit (- (point) 2048)))
-  (save-excursion
-    (re-search-backward "\\([^%]\"[[]\n\\|\n[ \t]*[]]\"\\)" limit t)
-    (if (looking-at "[ \t]\"[[]\n")
-      (setq multi-line-string t)))
-  multi-line-string))
+    (if (>= (point) 2048)
+        (setq limit (- (point) 2048)))
+    (save-excursion
+      (re-search-backward "\\([^%]\"[[]\n\\|\n[ \t]*[]]\"\\)" limit t)
+      (if (looking-at "[ \t]\"[[]\n")
+          (setq multi-line-string t)))
+    multi-line-string))
 
 (defvar eiffel-last-feature-level-indent -1)
 (defvar eiffel-feature-level-indent-regexp nil)
 (defun eiffel-in-paren-expression ()
-  "Determine if we are inside of a parenthesized expression. Will return invalid data if called while inside a string."
+  "Determine if we are inside of a parenthesized expression.
+Will return invalid data if called while inside a string."
   (interactive)
   (let ((paren-count 0) (limit 0))
-  (save-excursion
-    (if (= eiffel-last-feature-level-indent (eiffel-feature-level-indent-m))
-    (setq limit
-    (re-search-backward eiffel-feature-level-indent-regexp nil t))
-  (setq eiffel-last-feature-level-indent (eiffel-feature-level-indent-m))
-  (setq eiffel-feature-level-indent-regexp
-      (concat "^" (make-string eiffel-last-feature-level-indent ? )
-        "[^ \t\n]"))
-  (setq limit
-      (or (re-search-backward eiffel-feature-level-indent-regexp nil t)
-      0))))
-  (save-excursion
-    (while (re-search-backward "[][()]" limit t)
-  (if (looking-at "[[(]")
-    (setq paren-count (1+ paren-count))
-    (setq paren-count (1- paren-count)))))
-  paren-count))
+    (save-excursion
+      (if (= eiffel-last-feature-level-indent (eiffel-feature-level-indent-m))
+          (setq limit
+                (re-search-backward eiffel-feature-level-indent-regexp nil t))
+        (setq eiffel-last-feature-level-indent (eiffel-feature-level-indent-m))
+        (setq eiffel-feature-level-indent-regexp
+              (concat "^" (make-string eiffel-last-feature-level-indent ? )
+                      "[^ \t\n]"))
+        (setq limit
+              (or (re-search-backward eiffel-feature-level-indent-regexp nil t)
+                  0))))
+    (save-excursion
+      (while (re-search-backward "[][()]" limit t)
+        (if (looking-at "[[(]")
+            (setq paren-count (1+ paren-count))
+          (setq paren-count (1- paren-count)))))
+    paren-count))
 
 (defun eiffel-manifest-array-common ()
   "Common code for handling indentation/presence of Eiffel manifest arrays."
@@ -2651,8 +2654,7 @@ point."
   "Add menu of features of a class, sorted in order of occurence."
   (interactive)
   (setq imenu-create-index-function  'eiffel-imenu-create-index-by-position)
-  (imenu-add-to-menubar "Eiffel features")
-  )
+  (imenu-add-to-menubar "Eiffel features"))
 
 (defun eiffel-imenu-add-menubar-by-name ()
   "Add menu of features of a class, sorted by name."
@@ -2668,29 +2670,28 @@ point."
   "Generate index of features of a class, sorted by name."
   (eiffel-imenu-create-index 1))
 
+;; [:todo 2025-05-17, by Pierre Rouleau: Fix the following once I figure what
+;;                    it's supposed to do.  It's probably to show a menu of
+;;                    functions somewhere on the top menu.]
 (defun eiffel-imenu-create-index (sort-method)
   "Generate an index of all features of a class.
-Sort by position if sort-method is 0. Sort by name if sort-method is 1."
+Sort by position if sort-method is 0.
+Sort by name if SORT-METHOD is not 0."
+  (let ((menu nil))
+    ;; scan for features
+    (goto-char (point-max))
+    (while (eiffel-find-beginning-of-feature)
+      (if (looking-at "\\(\\sw\\|\\s_\\)+")
+          (add-to-list menu (cons (buffer-substring-no-properties
+                                   (match-beginning 0)
+                                   (match-end 0))
+                                  (point)))))
 
-  (let (menu prevpos)
-
-  (imenu-progress-message prevpos 0 t)
-
-  ;; scan for features
-  (goto-char (point-max))
-  (while (eiffel-find-beginning-of-feature)
-    (imenu-progress-message prevpos nil t)
-    (if (looking-at "\\(\\sw\\|\\s_\\)+")
-    (add-to-list 'menu (cons (buffer-substring-no-properties
-          (match-beginning 0)
-          (match-end 0)) (point)))))
-
-  (imenu-progress-message prevpos 100)
-
-  ;; sort in increasing buffer position order or by name
-  (if (= sort-method 0)
-    (sort menu (function (lambda (a b) (< (cdr a) (cdr b)))))
-    (sort menu (function (lambda (a b) (string< (car a) (car b))))))))
+    ;; sort in increasing buffer position order or by name
+    (if (= sort-method 0)
+        (sort menu (function (lambda (a b) (< (cdr a) (cdr b)))))
+      (sort menu (function (lambda (a b) (string< (car a) (car b))))))
+    menu))
 
 ;; XEmacs addition
 ;;;###autoload(add-to-list 'auto-mode-alist '("\\.e\\'" . eiffel-mode))
